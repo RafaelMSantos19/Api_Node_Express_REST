@@ -1,0 +1,40 @@
+# Ignorar node_modules (dependências do projeto)
+node_modules/
+
+# Ignorar arquivos de ambiente local (como variáveis de ambiente)
+.env
+.env.local
+
+# Ignorar logs
+*.log
+logs/
+
+# Ignorar arquivos de configuração do IDE
+.vscode/
+.idea/
+
+# Ignorar arquivos de build/dist
+dist/
+build/
+
+# Ignorar arquivos de cache do npm
+.npm
+.npmrc
+
+# Ignorar arquivos de cache do yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de coverage (testes)
+coverage/
+.nyc_output/
+
+# Ignorar arquivos de debug
+debug.log
