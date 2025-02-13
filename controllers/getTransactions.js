@@ -1,4 +1,5 @@
 const pool = require('../connections/db')
+const createWhereForDataHora = require("../utils/formatDatahoraForWhere")
 
 function _appendWhere(headers){
 
@@ -8,21 +9,35 @@ function _appendWhere(headers){
     
     whereArray= [] 
 
-    const { id, valor, status, metodo_pagamento} = headers
+    const { id, valor, status, metodo_pagamento, data_inicial, data_final } = headers;
 
-    if(id !=null){
-        whereArray.push(`id = ${id}`)
-    }
-    if(valor != null && valor != '' && valor != undefined){
-        whereArray.push(`valor = ${valor}`)
-    }
-    if(status != null){
-        whereArray.push(`status = '${status}'`)
-    }
-    if(metodo_pagamento != null && metodo_pagamento != '' && metodo_pagamento != undefined){
-        whereArray.push(`metodo_pagamento = '${metodo_pagamento}'`)
-    }
-            
+    data = createWhereForDataHora(data_inicial,data_final)
+
+    const whereValues = [
+        { key: 'id', value: id, format: (v) => v }, 
+        { key: 'valor', value: valor, format: (v) => v }, 
+        { key: 'status', value: status, format: (v) => `'${v}'` }, 
+        { key: 'metodo_pagamento', value: metodo_pagamento, format: (v) => `'${v}'` }, 
+        { key: 'datahora_transaction', value: data, format: (v) => v}
+    ];
+
+    whereValues.forEach(({ key, value, format }) => {
+
+
+        if (value != null && value !== '') { 
+
+            if(key != 'datahora_transaction'){
+
+                whereArray.push(`${key} = ${format(value)}`);
+
+            }else{
+                
+                whereArray.push(`${key} between ${value}`)
+            }
+
+        }
+    });
+    
 
     if(whereArray.length == 0){
 
@@ -36,8 +51,6 @@ function _appendWhere(headers){
     }
     
 }
-
-
 
 
 async function getTransactions(req, res) {
