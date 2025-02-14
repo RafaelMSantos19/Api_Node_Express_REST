@@ -2,10 +2,6 @@ const pool = require('../connections/db')
 const createWhereForDataHora = require("../utils/formatDatahoraForWhere")
 
 function _appendWhere(headers){
-
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
-    console.log(headers)
     
     whereArray= [] 
 
@@ -22,7 +18,6 @@ function _appendWhere(headers){
     ];
 
     whereValues.forEach(({ key, value, format }) => {
-
 
         if (value != null && value !== '') { 
 
@@ -58,10 +53,6 @@ async function getTransactions(req, res) {
     try{
 
         where = _appendWhere(req.headers)
-
-        console.log(where)
-
-
 
         if(where != null){
 
