@@ -6,11 +6,6 @@ async function newTransaction(req, res) {
 
         const { valor, status, metodo_pagamento} = req.body
 
-
-        console.log(valor)
-        console.log(status)
-        console.log(metodo_pagamento)
-
         const newTransaction = await pool.query(
             `INSERT INTO transactions (valor, status, metodo_pagamento) VALUES (${valor}, '${status}', '${metodo_pagamento}')`
         )
